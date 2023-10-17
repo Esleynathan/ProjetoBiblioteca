@@ -22,6 +22,8 @@ def valida_cadastro(request):
     senha = request.POST.get('senha')
     email = request.POST.get('email')
 
+    print(nome,senha,email)
+
     usuario = Usuario.objects.filter(email = email)
 
     if len(nome.strip()) == 0 or len(email.strip()) == 0:
@@ -31,6 +33,7 @@ def valida_cadastro(request):
         return redirect('/auth/cadastro/?status=2')
 
     if len(usuario) > 0:
+        print(usuario)
         return redirect('/auth/cadatro/?status=3')
 
     try:

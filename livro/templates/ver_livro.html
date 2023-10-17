@@ -15,7 +15,7 @@
     <div class="modal-body">
     
 
-    <a href="{% url 'excluir_livro' id_livro %}" class="btn btn-danger">Excluir</a>
+    <a href="" class="btn btn-danger">Excluir</a>
         
     </div>
     
@@ -26,7 +26,7 @@
 
 <div class="container">
     <br>
-<form action="{% url 'alterar_livro' %}" method="POST">
+<form action="" method="POST">
     {% csrf_token %}
     <input type="hidden" value="{{livro.id}}" name="livro_id">
     <p>
@@ -48,28 +48,22 @@
     <select style="width: 20%;" class="form-control" name="categoria_id">
         {% for i in categoria_livro%}
         
-        {% if livro.categoria.nome == i.nome %}
-            <option value="{{i.id}}" selected>{{i}}</option>
-        {% else %}
+            {% if livro.categoria.nome == i.nome %}
+                <option value="{{i.id}}" selected>{{i}}</option>
+            {% else %}
+                <option value="{{i.id}}">{{i}}</option>
+            {% endif%}
 
-            <option value="{{i.id}}">{{i}}</option>
-        {% endif%}
-        {% endfor %}
-        
-
-
+        {% endfor %}     
     </select>
 
     <br>
-
     <p>
         <label>Data:</label>
         <p>{{livro.data_cadastro}}</p>
     </p>
     
-    <br>
-    
-    
+    <br>       
         <label>Emprestado</label>
         {% if livro.emprestado %}
 
@@ -85,14 +79,10 @@
         {% endif %}
         <br>
         <br>
-
-    
-
-    
-
     <input type="submit" class="btn btn-success btn-lg" value="Salvar">
 </form>
 <br>
+
 <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#exampleModal2">
     Excluir
 </button>
@@ -149,7 +139,7 @@
     </button>
     </div>
     <div class="modal-body">
-    <form action="{% url 'processa_avaliacao' %}" method="POST">{% csrf_token %}
+    <form action="" method="POST">{% csrf_token %}
         <input type="hidden" name="id_livro" value="{{id_livro}}">
         <input id="id_emprestimo" type="hidden" name="id_emprestimo">
         <select class="form-control" name="opcoes">

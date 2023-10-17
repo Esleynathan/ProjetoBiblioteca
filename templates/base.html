@@ -25,7 +25,7 @@
             
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
                 <button type="button" class="btn btn-primary dropdown-item" data-toggle="modal" data-target="#exampleModal" >Opções</button>
-                <a href="{% url 'seus_emprestimos' %}" class="btn btn-danger dropdown-item">Seus emprestimos</a>
+                <a href="" class="btn btn-danger dropdown-item">Seus emprestimos</a>
                 <a href="{% url 'sair'%}" class="btn btn-danger dropdown-item">Sair</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item">Total: {{total_livro}}</a>
@@ -63,7 +63,7 @@
                     
                     <hr>
                     <div style="display: none;" id="livro">
-                        <form action="{% url 'cadastrar_livro' %}" method="POST">
+                        <form action="" method="POST">
                         {% csrf_token %}
                         <table>
                             {{form.as_table}}
@@ -76,7 +76,7 @@
 
 
                     <div style="display: none;" id="categoria">
-                    <form action="{% url 'cadastrar_categoria' %}" method="POST">{% csrf_token %}
+                    <form action="" method="POST">{% csrf_token %}
                         <table>
                         {{form_categoria.as_table}}
                         </table>
@@ -90,7 +90,7 @@
                     <button onclick="exibe_input_emprestado(2)" class="btn btn-dark" >Usuario existente</button>
                     <br>
                     <br>
-                    <form id="form_emprestimo" action="{% url 'cadastrar_emprestimo' %}" method="POST">{% csrf_token %}
+                    <form id="form_emprestimo" action="" method="POST">{% csrf_token %}
                         <select style="display: none;" id="nome_emprestado" class="form-control" name="nome_emprestado">
                         
                         {% for usuario in usuarios %}
@@ -114,7 +114,7 @@
                     </div>
 
                     <div style="display: none;" id="devolucao">
-                    <form action="{% url 'devolver_livro' %}" method="POST">{% csrf_token %}
+                    <form action="" method="POST">{% csrf_token %}
                         <select class="form-control" name="id_livro_devolver">
                             
                             {% for livro in livros_emprestados %}
