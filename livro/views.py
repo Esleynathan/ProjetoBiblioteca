@@ -64,3 +64,13 @@ def ver_livros(request, id):
         else:
             return HttpResponse('Esse livro não é seu')
     return redirect('/auth/login/?status=2')
+
+def cadastrar_livro(request):
+    if request.method == "POST":
+        form = CadastroLivro(request.POST)
+        
+        if form.is_valid():
+            form.save()
+            return redirect('/livro/home')
+        else:
+            return HttpResponse ('Dados Inválidos')
