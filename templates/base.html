@@ -46,92 +46,122 @@
         {% if usuario_logado %}
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Cadastrar / Emprestar / Devolver</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                    <button style="margin-left: 10px;" onclick="mostrar_form(1)" class="btn btn-info" >Categoria</button>
-                    <button style="margin-left: 10px;" onclick="mostrar_form(2)" class="btn btn-warning">Livro</button>
-                    <button style="margin-left: 10px;" onclick="mostrar_form(3)" class="btn btn-primary">Emprestimo</button>
-                    <button style="margin-left: 10px;" onclick="mostrar_form(4)" class="btn btn-danger">Devolução</button>
-                    <br>
-                    
-                    <hr>
-                    <div style="display: none;" id="livro">
-                        <form action="" method="POST">
-                        {% csrf_token %}
-                        <table>
-                            {{form.as_table}}
-                        </table>
-                        
-                        <input type="submit" class="btn btn-success" value="Cadastrar">
+                <div class="modal-content">
 
-                        </form>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cadastrar / Emprestar / Devolver</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
 
-
-                    <div style="display: none;" id="categoria">
-                        <form action="{ url 'cadastrar_livro' }" method="POST">{% csrf_token %}
-                            <table>
-                            {{form_categoria.as_table}}
-                            </table>
-                            <input type="hidden" name="usuario" value="{{usuario_logado}}">
-                            <input class="btn btn-success" type="submit" value="Enviar">
-                        </form>
-                    </div>
-
-                    <div style="display: none;" id="emprestimos">
-                    <button onclick="exibe_input_emprestado(1)" class="btn btn-success">Usuário novo</button>
-                    <button onclick="exibe_input_emprestado(2)" class="btn btn-dark" >Usuario existente</button>
-                    <br>
-                    <br>
-                    <form id="form_emprestimo" action="" method="POST">{% csrf_token %}
-                        <select style="display: none;" id="nome_emprestado" class="form-control" name="nome_emprestado">
-                        
-                        {% for usuario in usuarios %}
-                            <option value="{{usuario.id}}">{{usuario.nome}}</option>
-                        {% endfor %}
-
-                        </select>
+                    <div class="modal-body">
+                        <button style="margin-left: 10px;" onclick="mostrar_form(1)" class="btn btn-info" >Categoria</button>
+                        <button style="margin-left: 10px;" onclick="mostrar_form(2)" class="btn btn-warning">Livro</button>
+                        <button style="margin-left: 10px;" onclick="mostrar_form(3)" class="btn btn-primary">Emprestimo</button>
+                        <button style="margin-left: 10px;" onclick="mostrar_form(4)" class="btn btn-danger">Devolução</button>
                         <br>
-                        <input id="nome_emprestado_anonimo" type="text" placeholder="Digite o nome para quem emprestou..." name="nome_emprestado_anonimo" class="form-control">
-                        <br>
-                        <select class="form-control" name="livro_emprestado">
-                        
-                        {% for livro in livros_emprestar %}
-                            <option value="{{livro.id}}">{{livro.nome}}</option>
-                        {% endfor %}
+                        <hr>
 
-                        </select>
-                        <br>
-                        <input type="submit" value="Emprestar" class="btn btn-success">
-                    </form>
-                    </div>
+                        <div style="display: none;" id="categoria">
+                            <form action="{% url 'cadastrar_categoria' %}" method="POST">{% csrf_token %}
+                                <table>
+                                {{form_categoria.as_table}} 
+                                </table>
+                                <input type="hidden" name="usuario" value="{{usuario_logado}}">
+                                <input class="btn btn-success" type="submit" value="Enviar">
+                            </form>
+                        </div>
 
-                    <div style="display: none;" id="devolucao">
-                    <form action="" method="POST">{% csrf_token %}
-                        <select class="form-control" name="id_livro_devolver">
-                            
-                            {% for livro in livros_emprestados %}
-                                <option value="{{livro.id}}">{{livro.nome}}</option>
-                            {% endfor %}
-                        
+                        <div style="display: none;" id="livro">
+                            <form action="{% url 'cadastrar_livro' %}" method="POST">{% csrf_token %}
+                                <table>
+                                    {{form.as_table}}
+                                </table>
+                                
+                                <input type="submit" class="btn btn-success" value="Cadastrar">
+                            </form>
+                        </div>
 
-                        </select>
-                        <br>
+                        <div style="display: none;" id="emprestimos">
+                            <button onclick="exibe_input_emprestado(1)" class="btn btn-success">Usuário novo</button>
+                            <button onclick="exibe_input_emprestado(2)" class="btn btn-dark" >Usuario existente</button>
+                            <br>
+                            <br>
+                            <form id="form_emprestimo" action="" method="POST">{% csrf_token %}
+                                <select style="display: none;" id="nome_emprestado" class="form-control" name="nome_emprestado">                                
+                                    {% for usuario in usuarios %}
+                                        <option value="{{usuario.id}}">{{usuario.nome}}</option>
+                                    {% endfor %}
+                                </select>
+                                <br>
+                                <input id="nome_emprestado_anonimo" type="text" placeholder="Digite o nome para quem emprestou..." name="nome_emprestado_anonimo" class="form-control">
+                                <br>
+                                <select class="form-control" name="livro_emprestado">                                
+                                    {% for livro in livros_emprestar %}
+                                        <option value="{{livro.id}}">{{livro.nome}}</option>
+                                    {% endfor %}
+                                </select>
+                                <br>
+                                <input type="submit" value="Emprestar" class="btn btn-success">
+                            </form>
+                        </div>
 
-                        <input type="submit" class="btn btn-warning" value="Devolver">
-                    </form>
+                        <div style="display: none;" id="devolucao">
+                            <form action="" method="POST">{% csrf_token %}
+                                <select class="form-control" name="id_livro_devolver">                                    
+                                    {% for livro in livros_emprestados %}
+                                        <option value="{{livro.id}}">{{livro.nome}}</option>
+                                    {% endfor %}                              
+                                </select>
+                                <br>
+                                <input type="submit" class="btn btn-warning" value="Devolver">
+                            </form>
+                        </div>
+
                     </div>
                 </div>
-            </div>
             </div>
         </div>
         {% endif %}
+
+
+
+
+<script>
+    function mostrar_form(v1){
+        categoria = document.getElementById('categoria')
+        livro = document.getElementById('livro')
+        emprestimos = document.getElementById('emprestimos')
+        devolucao = document.getElementById('devolucao')
+
+        if (v1 == 1){
+            categoria.style.display = 'block';
+            livro.style.display = 'none';
+            emprestimos.style.display = 'none';  
+            devolucao.style.display = 'none';  
+        }else if(v1 == 2){          
+            categoria.style.display = 'none';
+            livro.style.display = 'block';
+            emprestimos.style.display = 'none';  
+            devolucao.style.display = 'none';   
+        }else if(v1 == 3){            
+            categoria.style.display = 'none';
+            livro.style.display = 'none';
+            emprestimos.style.display = 'block';  
+            devolucao.style.display = 'none';  
+        }else if(v1 == 4){            
+            categoria.style.display = 'none';
+            livro.style.display = 'none';
+            emprestimos.style.display = 'none';  
+            devolucao.style.display = 'block';  
+        }
+    }
+
+    {% comment %} function exibe_input_emprestado(v1){
+
+    } {% endcomment %}
+</script>
 
 
 

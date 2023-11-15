@@ -74,3 +74,28 @@ def cadastrar_livro(request):
             return redirect('/livro/home')
         else:
             return HttpResponse ('Dados Inválidos')
+
+def excluir_livro(request, id):    
+    livro = Livros.objects.filter(id = id).delete()        
+    return redirect('/livro/home')
+
+
+def cadastrar_categoria(request):
+    form = CategoriaLivro(request.POST)
+    nome = form.data['nome']
+    descricao = form.data['descricao']
+    id_usuario = request.POST.get('usuario')
+
+    if int(id_usuario) == int(request.session.get('usuario')):
+        user = Usuario.objects.get(id = id_usuario)
+        categoria = Categoria.objects.filter(nome = nome)
+        if not categoria:
+            categoria = Categoria(nome = nome,
+                                descricao = descricao,
+                                usuario = user)
+            categoria.save()
+            return redirect('/livro/home?cadastro_categoria=1')
+        else:
+            return HttpResponse('Categoria Já existe')
+    else:     
+        return HttpResponse("ERRO 500")
