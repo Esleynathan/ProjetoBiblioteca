@@ -16,6 +16,7 @@ def home(request):
         form = CadastroLivro()
         form.fields['usuario'].initial = request.session['usuario']
         form.fields['categoria'].queryset = Categoria.objects.filter(usuario = usuario)     
+
         form_categoria = CategoriaLivro()
         usuarios = Usuario.objects.all()
 
@@ -99,3 +100,45 @@ def cadastrar_categoria(request):
             return HttpResponse('Categoria Já existe')
     else:     
         return HttpResponse("ERRO 500")
+
+def cadastrar_emprestimo(request):    
+    if request.method == "POST":
+        nome_emprestado = request.POST.get('nome_emprestado')  
+        nome_emprestado_anonimo = request.POST.get('nome_emprestado_anonimo')  
+        livro_emprestado = request.POST.get('livro_emprestado')
+
+        if nome_emprestado_anonimo:
+            emprestimo =   Emprestimos(nome_emprestado_anonimo = nome_emprestado_anonimo,
+                                    livro_id = livro_emprestado)
+        else:
+            emprestimo =   Emprestimos(nome_emprestado_id = nome_emprestado,
+                                    livro_id = livro_emprestado)
+
+        emprestimo.save()
+
+        livro = Livros.objects.get(id = livro_emprestado)
+        livro.emprestado = True
+        livro.save()
+
+        return HttpResponse('Olá')
+
+def devolver_emprestimo(request):    
+    if request.method == "POST":
+        nome_emprestado = request.POST.get('nome_emprestado')  
+        nome_emprestado_anonimo = request.POST.get('nome_emprestado_anonimo')  
+        livro_emprestado = request.POST.get('livro_emprestado')
+
+        if nome_emprestado_anonimo:
+            emprestimo =   Emprestimos(nome_emprestado_anonimo = nome_emprestado_anonimo,
+                                    livro_id = livro_emprestado)
+        else:
+            emprestimo =   Emprestimos(nome_emprestado_id = nome_emprestado,
+                                    livro_id = livro_emprestado)
+
+        emprestimo.save()
+
+        livro = Livros.objects.get(id = livro_emprestado)
+        livro.emprestado = True
+        livro.save()
+
+        return HttpResponse('Olá')
