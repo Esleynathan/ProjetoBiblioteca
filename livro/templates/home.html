@@ -6,11 +6,19 @@
 <div class="container">
 
     <br>
+    
     {% if status_categoria == '1' %}
         <div class="alert alert-success" role="alert">
         Categoria cadastrada com sucesso
+        {{status_categoria}}
+        </div>
+
+    {% elif status_cadastro == '1' %}
+        <div class="alert alert-success" role="alert">
+            Livro cadastrado com sucesso
         </div>
     {% endif %}
+
 
     <div class="row">
 

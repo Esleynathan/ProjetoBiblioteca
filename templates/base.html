@@ -110,7 +110,7 @@
                         </div>
 
                         <div style="display: none;" id="devolucao">
-                            <form action="" method="POST">{% csrf_token %}
+                            <form action="{% url 'devolver_livro' %}" method="POST">{% csrf_token %}
                                 <select class="form-control" name="id_livro_devolver">                                    
                                     {% for livro in livros_emprestados %}
                                         <option value="{{livro.id}}">{{livro.nome}}</option>
@@ -132,31 +132,26 @@
 
 <script>
     function mostrar_form(v1){
-        categoria = document.getElementById('categoria')
-        livro = document.getElementById('livro')
-        emprestimos = document.getElementById('emprestimos')
-        devolucao = document.getElementById('devolucao')
-
         if (v1 == 1){
-            categoria.style.display = 'block';
-            livro.style.display = 'none';
-            emprestimos.style.display = 'none';  
-            devolucao.style.display = 'none';  
+            document.getElementById('categoria').style.display = 'block';
+            document.getElementById('livro').style.display = 'none';
+            document.getElementById('emprestimos').style.display = 'none';  
+            document.getElementById('devolucao').style.display = 'none';  
         }else if(v1 == 2){          
-            categoria.style.display = 'none';
-            livro.style.display = 'block';
-            emprestimos.style.display = 'none';  
-            devolucao.style.display = 'none';   
+            document.getElementById('categoria').style.display = 'none';
+            document.getElementById('livro').style.display = 'block';
+            document.getElementById('emprestimos').style.display = 'none';  
+            document.getElementById('devolucao').style.display = 'none';   
         }else if(v1 == 3){            
-            categoria.style.display = 'none';
-            livro.style.display = 'none';
-            emprestimos.style.display = 'block';  
-            devolucao.style.display = 'none';  
+            document.getElementById('categoria').style.display = 'none';
+            document.getElementById('livro').style.display = 'none';
+            document.getElementById('emprestimos').style.display = 'block';  
+            document.getElementById('devolucao').style.display = 'none';  
         }else if(v1 == 4){            
-            categoria.style.display = 'none';
-            livro.style.display = 'none';
-            emprestimos.style.display = 'none';  
-            devolucao.style.display = 'block';  
+            document.getElementById('categoria').style.display = 'none';
+            document.getElementById('livro').style.display = 'none';
+            document.getElementById('emprestimos').style.display = 'none';  
+            document.getElementById('devolucao').style.display = 'block';  
         }
     }
 
