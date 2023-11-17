@@ -153,3 +153,19 @@ def seus_emprestimos(request):
 
     return render(request, 'seus_emprestimos.html', {'usuario_logado': request.session['usuario'],
                                                     'emprestimos': emprestimos})
+
+def processa_avaliacao(request):
+    
+    id_livro = request.POST.get('id_livro')
+    id_emprestimo = request.POST.get('id_emprestimo')
+    opcoes = request.POST.get('opcoes')
+
+    emprestimo = Emprestimos.objects.get('id_emprestimo')
+
+    if emprestimo.usuario.id == request.session['usuario']:
+        emprestimo.avaliacao = opcoes
+        emprestimo.save()
+
+        return redirect(f'/livro/ver_livros/{id_livro}')
+    else:
+        return redirect('/auth/sair')
