@@ -12,6 +12,7 @@ def home(request):
     if request.session.get('usuario'):  
         usuario = Usuario.objects.get(id = request.session['usuario'])
         status_categoria = request.GET.get('cadastro_categoria')
+        status_livro = request.GET.get('cadastro_livro')
         livros = Livros.objects.filter(usuario = usuario)
         total_livros = livros.count()
         form = CadastroLivro()
@@ -27,6 +28,7 @@ def home(request):
                                             'usuario_logado': request.session.get('usuario'),
                                             'form': form,
                                             'status_categoria': status_categoria,
+                                            'status_livro': status_livro,
                                             'form_categoria': form_categoria,
                                             'usuarios': usuarios,
                                             'livros_emprestar': livros_emprestar,
@@ -73,7 +75,7 @@ def cadastrar_livro(request):
         
         if form.is_valid():
             form.save()
-            return redirect('/livro/home')
+            return redirect('/livro/home?cadastro_livro=1')
         else:
             return HttpResponse('DADOS INVÁLIDOS')
 
@@ -154,15 +156,14 @@ def seus_emprestimos(request):
     return render(request, 'seus_emprestimos.html', {'usuario_logado': request.session['usuario'],
                                                     'emprestimos': emprestimos})
 
-def processa_avaliacao(request):
-    
+def processa_avaliacao(request):    
     id_livro = request.POST.get('id_livro')
     id_emprestimo = request.POST.get('id_emprestimo')
     opcoes = request.POST.get('opcoes')
 
-    emprestimo = Emprestimos.objects.get('id_emprestimo')
+    emprestimo = Emprestimos.objects.get(id = id_emprestimo)
 
-    if emprestimo.usuario.id == request.session['usuario']:
+    if emprestimo.livro.usuario.id == request.session['usuario']:
         emprestimo.avaliacao = opcoes
         emprestimo.save()
 
