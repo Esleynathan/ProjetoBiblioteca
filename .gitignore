@@ -5,6 +5,11 @@ __pycache__/
 # C extensions
 *.so
 
+#Django
+
+media/
+static/
+
 # Distribution / packaging
 .Python
 build/
