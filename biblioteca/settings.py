@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool, default=False)
 
-ALLOWED_HOSTS = ['biblioteca.vps-kinghost.net','177.153.51.192' ,'http://biblioteca.vps-kinghost.net']
+ALLOWED_HOSTS = ['esleynathan.com.br', 'biblioteca.vps-kinghost.net','177.153.51.192' ,'http://biblioteca.vps-kinghost.net']
 
 
 # Application definition
@@ -139,3 +139,11 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# HTTPS/SSL
+
+if not DEBUG:
+	SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+	SECURE_SSL_REDIRECT = True
+	SESSION_COOKIE_SECURE = True
+	CSRF_COOKIE_SECURE = True
